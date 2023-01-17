@@ -3,6 +3,8 @@
 #include <vector>
 #include <string>
 #include <map>
+#include "treenode.h"
+#include <unordered_map>
 
 class parser
 {
@@ -15,7 +17,8 @@ class parser
 
 	//0 decimal, 1 hex, 2 binary
 	int config_mode = 0;
-	std::map<std::string, int> lookuptable;
+
+	std::unordered_map<std::string, int> hashmap;
 	std::string assign_target;
 
 	void init();
@@ -23,6 +26,19 @@ class parser
 	void consume(const std::string& token);
 
 	bool evaluate();
+
+	treenode parse_expression();
+
+	treenode parse_term();
+	
+	treenode parse_factor();
+
+	bool is_integer(std::string check);
+	bool is_variable(std::string check);
+
+
+
+
 
 	bool parse_logExp();
 
@@ -53,6 +69,10 @@ class parser
 	int parse_variable();
 
 	int parse_int();
+
+
+
+
 
 	void do_print(int number);
 
