@@ -216,6 +216,8 @@ treenode parser::parse_term()
 		}
 		else
 			return a;
+
+		return a;
 	}
 }
 
