@@ -1,0 +1,2 @@
+config dec
+print 1 + 1
