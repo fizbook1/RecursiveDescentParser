@@ -6,6 +6,14 @@
 void parser::init()
 {
 	hashmap = std::unordered_map<std::string, int>();
+	tokens.push_back("print");
+	tokens.push_back("3");
+	tokens.push_back("+");
+	tokens.push_back("3");
+	tokens.push_back("+");
+	tokens.push_back("3");
+	tokens.push_back("-");
+	tokens.push_back("3");
 }
 
 std::string parser::peek() {
@@ -50,7 +58,7 @@ int parser::parse_statement()
 
 int parser::parse_config()
 {
-	bool result = parse_print();
+	int result = parse_print();
 
 	std::string next_token = peek();
 	while (1)
@@ -91,7 +99,7 @@ int parser::parse_config()
 
 int parser::parse_print()
 {
-	bool result = parse_assign();
+	int result = parse_assign();
 
 	std::string next_token = peek();
 
@@ -112,7 +120,7 @@ int parser::parse_assign()
 {
 	std::string next_token = peek();
 
-	if (is_variable(next_token))
+	if (is_variable(next_token) && next_token != "print" && next_token != "config")
 	{
 		assign_target = next_token;
 
@@ -126,20 +134,25 @@ int parser::parse_assign()
 			hashmap.insert_or_assign(assign_target, parse_math());
 		}
 	}
-	
+	return 0;
 }
 
 int parser::parse_math()
 {
-	return parse_expression().eval();
+	treenode* hell = parse_expression();
+	return hell->eval();
 }
 
-treenode parser::parse_factor()
+treenode* parser::parse_factor()
 {
 	std::string next_token = peek();
 	if (is_integer(next_token))
 	{
-		//return next_token;
+		//return std::stoi(next_token);
+		consume(next_token);
+		integer* dummy = new integer(std::stoi(next_token));
+		return dummy;
+		
 	}
 	else if (is_variable(next_token))
 	{
@@ -149,7 +162,7 @@ treenode parser::parse_factor()
 	{
 		consume("(");
 		next_token = peek();
-		treenode a = parse_expression();
+		treenode* a = parse_expression();
 
 		if (next_token == ")")
 		{
@@ -161,30 +174,43 @@ treenode parser::parse_factor()
 	{
 		consume("-");
 		next_token = peek();
-		return negate(parse_factor());
+		
+
+
+		//negate dummy = negate(&parse_factor());
+		//return dummy;
 	}
 }
 
-treenode parser::parse_expression()
+treenode* parser::parse_expression()
 {
 	std::string next_token = peek();
-	treenode a = parse_term();
-	while (1)
+	treenode* a = parse_term();
+
+	next_token = peek();
+	while (1 == 1)
 	{
+		if (next_token == "\x3")
+		{
+			return a;
+			//break;
+		}
 		if (next_token == "+")
 		{
 			consume("+");
 			next_token = peek();
-			treenode b = parse_expression();
-			treenode c = add(a, b);
+			treenode* b = parse_expression();
+			add* dummy = new add(a, b);
+			treenode* c = dummy;
 			a = c;
 		}
 		else if (next_token == "-")
 		{
 			consume("-");
 			next_token = peek();
-			treenode b = parse_expression();
-			treenode c = subtract(a, b);
+			treenode* b = parse_expression();
+			subtract* dummy = new subtract(a, b);
+			treenode* c = dummy;
 			a = c;
 		}
 		else
@@ -192,26 +218,28 @@ treenode parser::parse_expression()
 	}
 }
 
-treenode parser::parse_term()
+treenode* parser::parse_term()
 {
 	std::string next_token = peek();
-	treenode a = parse_factor();
+	treenode* a = parse_factor();
 	while (1)
 	{
 		if (next_token == "*")
 		{
 			consume("*");
 			next_token = peek();
-			treenode b = parse_term();
-			treenode c = multiply(a, b);
+			treenode* b = parse_term();
+			multiply* dummy = new multiply(a, b);
+			treenode* c = dummy;
 			a = c;
 		}
 		else if (next_token == "/")
 		{
 			consume("/");
 			next_token = peek();
-			treenode b = parse_term();
-			treenode c = divide(a, b);
+			treenode* b = parse_term();
+			divide* dummy = new divide(a, b);
+			treenode* c = dummy;
 			a = c;
 		}
 		else
@@ -241,6 +269,7 @@ int parser::parse_product()
 		consume("*");
 		b = std::stoi(peek(1));
 	}
+	return 1;
 }
 
 int parser::parse_sum()
@@ -248,6 +277,7 @@ int parser::parse_sum()
 	std::string next_token = peek();
 	if (next_token == "*")
 	{
+		return 1;
 		//result = 
 	}
 }

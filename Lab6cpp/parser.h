@@ -8,6 +8,7 @@
 
 class parser
 {
+public:
 	std::vector<std::string> tokens;
 	int position;
 	const std::string ETX = "\u0003";
@@ -27,11 +28,11 @@ class parser
 
 	bool evaluate();
 
-	treenode parse_expression();
+	treenode* parse_expression();
 
-	treenode parse_term();
+	treenode* parse_term();
 	
-	treenode parse_factor();
+	treenode* parse_factor();
 
 	bool is_integer(std::string check);
 	bool is_variable(std::string check);

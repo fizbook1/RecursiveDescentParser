@@ -2,10 +2,21 @@
 //
 
 #include <iostream>
+#include "parser.h"
+#include "tokenizer.h"
+#include "treenode.h"
 
 int main()
 {
+    parser parse = parser();
+
+    parse.init();
+    
     std::cout << "Hello World!\n";
+
+    parse.parse_statement();
+
+
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
