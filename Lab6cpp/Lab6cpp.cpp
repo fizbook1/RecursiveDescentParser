@@ -9,6 +9,7 @@
 int main()
 {
     parser parse = parser();
+	tokenizer token = tokenizer();
 
     parse.init();
     
@@ -16,20 +17,25 @@ int main()
 
     std::vector<std::string> tokenlist;
 
-	tokenlist.push_back("myvar");
-	tokenlist.push_back("=");
-	tokenlist.push_back("3");
-	tokenlist.push_back("*");
-	tokenlist.push_back("3");
-	tokenlist.push_back("+");
-	tokenlist.push_back("3");
-	parse.parse(tokenlist);
-	tokenlist.clear();
+	token.tokenize();
+	tokenlist = 
 
-	tokenlist.push_back("print");
-	tokenlist.push_back("myvar");
-	parse.parse(tokenlist);
-	tokenlist.clear();
+	//tokenlist.push_back("myvar");
+	//tokenlist.push_back("=");
+	//tokenlist.push_back("(");
+	//tokenlist.push_back("3");
+	//tokenlist.push_back("+");
+	//tokenlist.push_back("3");
+	//tokenlist.push_back(")");
+	//tokenlist.push_back("/");
+	//tokenlist.push_back("3");
+	//parse.parse(tokenlist);
+	//tokenlist.clear();
+
+	//tokenlist.push_back("print");
+	//tokenlist.push_back("myvar");
+	//parse.parse(tokenlist);
+	//tokenlist.clear();
 
 	//tokenlist.push_back("myvar2");
 	//tokenlist.push_back("=");

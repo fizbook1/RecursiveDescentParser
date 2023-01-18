@@ -2,6 +2,7 @@
 #include <regex>
 #include <iostream>
 #include <bitset>
+#include <stdexcept>
 
 void parser::init()
 {
@@ -89,6 +90,9 @@ int parser::parse_config()
 				std::cout << "Configuration mode set to binary.";
 				return 2;
 			}
+			else
+				std::cout << "ERROR: No suitable configuration mode entered.";
+			throw std::invalid_argument("No suitable configuration mode entered.");
 		}
 		else
 			break;
@@ -136,6 +140,19 @@ int parser::parse_assign()
 			int wat = 5;
 		}
 	}
+
+		if (next_token == "print" || next_token == "config")
+		{
+			next_token = peek(1);
+			if (next_token == "=")
+			{
+				std::cout << "ERROR: Cannot use 'print' or 'config' as variable names. These are reserved as keywords for the language runtime. big fancy words \n";
+				throw std::runtime_error("Cannot use 'print' or 'config' as variable names.");
+			}
+
+		}
+	
+	
 	return 0;
 }
 
@@ -159,6 +176,11 @@ treenode* parser::parse_factor()
 	else if (is_variable(next_token))
 	{
 		consume(next_token);
+		if (hashmap.count(next_token) == 0)
+		{
+			std::cout << "ERROR: Use of unassigned variable " << next_token << ".\n";
+			return new integer(0);
+		}
 		integer* dummy = new integer(hashmap.at(next_token));
 		return dummy;
 	}
@@ -168,10 +190,15 @@ treenode* parser::parse_factor()
 		next_token = peek();
 		treenode* a = parse_expression();
 
+		next_token = peek();
 		if (next_token == ")")
 		{
 			consume(")");
 			return a;
+		}
+		else
+		{
+			std::cout << "probably an error forgor closing parenthesis";
 		}
 	}
 	else if (next_token == "-")
@@ -226,6 +253,7 @@ treenode* parser::parse_term()
 	treenode* a = parse_factor();
 	while (1)
 	{
+		next_token = peek();
 		if (next_token == "*")
 		{
 			consume("*");
