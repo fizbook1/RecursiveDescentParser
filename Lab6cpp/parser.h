@@ -37,19 +37,7 @@ public:
 	bool is_integer(std::string check);
 	bool is_variable(std::string check);
 
-
-
-
-
-	bool parse_logExp();
-
-	bool parse_orExp();
-
-	bool parse_andExp();
-
-	bool parse_cmpExp();
-
-	bool parse_primaryExp();
+	void parse(std::vector<std::string> tokenlist);
 
 	int parse_statement();
 
@@ -60,16 +48,6 @@ public:
 	int parse_print();
 
 	int parse_math();
-
-	int parse_sum();
-
-	int parse_product();
-
-	int parse_primary();
-
-	int parse_variable();
-
-	int parse_int();
 
 
 

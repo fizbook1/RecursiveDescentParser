@@ -6,14 +6,15 @@
 void parser::init()
 {
 	hashmap = std::unordered_map<std::string, int>();
-	tokens.push_back("print");
-	tokens.push_back("3");
-	tokens.push_back("+");
-	tokens.push_back("3");
-	tokens.push_back("+");
-	tokens.push_back("3");
-	tokens.push_back("-");
-	tokens.push_back("3");
+
+	
+}
+
+void parser::parse(std::vector<std::string> tokenlist)
+{
+	tokens = tokenlist;
+	position = 0;
+	parse_statement();
 }
 
 std::string parser::peek() {
@@ -132,6 +133,7 @@ int parser::parse_assign()
 			consume("=");
 
 			hashmap.insert_or_assign(assign_target, parse_math());
+			int wat = 5;
 		}
 	}
 	return 0;
@@ -156,7 +158,9 @@ treenode* parser::parse_factor()
 	}
 	else if (is_variable(next_token))
 	{
-
+		consume(next_token);
+		integer* dummy = new integer(hashmap.at(next_token));
+		return dummy;
 	}
 	else if (next_token == "(")
 	{
@@ -175,10 +179,8 @@ treenode* parser::parse_factor()
 		consume("-");
 		next_token = peek();
 		
-
-
-		//negate dummy = negate(&parse_factor());
-		//return dummy;
+		negate* dummy = new negate(parse_factor());
+		return dummy;
 	}
 }
 
@@ -250,57 +252,6 @@ treenode* parser::parse_term()
 }
 
 
-
-
-
-
-
-
-int parser::parse_product()
-{
-	int result = parse_product();
-
-	int a = std::stoi(peek());
-	int b = 1;
-
-	std::string next_token = peek(1);
-	if (next_token == "*")
-	{
-		consume("*");
-		b = std::stoi(peek(1));
-	}
-	return 1;
-}
-
-int parser::parse_sum()
-{
-	std::string next_token = peek();
-	if (next_token == "*")
-	{
-		return 1;
-		//result = 
-	}
-}
-
-int parser::parse_primary()
-{
-	int result;
-	std::string next_token = peek();
-	if (std::regex_match(next_token, std::regex("[A-Za-z][A-Za-z0-9]*")))
-	{
-		//return *lookuptable.find(next_token);
-	}
-	else if (std::regex_match(next_token, std::regex("[0-9][0-9]*")))
-	{
-		return std::stoi(next_token);
-	}
-	else if (next_token == "(")
-	{
-		consume(next_token);
-		result = parse_math();
-	}
-}
-
 bool parser::evaluate() 
 {
 	return parse_statement();
@@ -312,134 +263,20 @@ void parser::do_print(int number)
 	{
 		case 0:
 			
-			std::cout << std::dec << number;
+			std::cout << std::dec << number << std::endl;
 
 		break;
 
 		case 1:
 
-			std::cout << std::hex << number;
+			std::cout << std::hex << number << std::endl;
 
 		break;
 
 		case 2:
 
-			std::cout << std::bitset<32>(number).to_string();
+			std::cout << std::bitset<32>(number).to_string() << std::endl;
 
 		break;
 	}
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-bool parser::parse_logExp() 
-{
-	return parse_orExp();
-}
-
-bool parser::parse_orExp() 
-{
-	bool result = parse_andExp();
-
-	std::string next_token = peek();
-	while (1)
-	{
-		if (next_token == "||")
-		{
-			consume("||");
-			result = (result || parse_andExp());
-		}
-		else
-			break;
-		next_token = peek();
-	}
-
-	return result;
-}
-
-bool parser::parse_andExp() 
-{
-	bool result = parse_cmpExp();
-	std::string next_token = peek();
-	while (1)
-	{
-		if (next_token == "&&")
-		{
-			consume("&&");
-			result = result && parse_cmpExp();
-		}
-		else
-			break;
-
-		next_token = peek();
-	}
-
-	return result;
-}
-
-bool parser::parse_cmpExp() 
-{
-	int result = parse_primaryExp();
-
-	std::string next_token = peek();
-	while (1)
-	{
-		if (next_token == "==")
-		{
-			consume("==");
-			result = (result == parse_primaryExp());
-		}
-		else if (next_token == "<")
-		{
-			consume("<");
-			result = (result < parse_primaryExp());
-		}
-		else if (next_token == ">")
-		{
-			consume(">");
-			result = (result > parse_primaryExp());
-		}
-		else
-			break;
-
-		next_token = peek();
-	}
-	return (bool)result;
-}
-
-bool parser::parse_primaryExp() 
-{
-	int value;
-	std::string next_token = peek();
-	// Number
-	//if (is_int(next_token))
-	{
-		value = std::stoi(next_token);
-		consume(next_token);
-	}
-	// Parenthesis expression: ( LogExp )
-	if (next_token == "(")
-	{
-		consume("(");
-		value = parse_logExp();
-		if (peek() == ")")
-			consume(")");
-	}
-	// No valid PrimaryExp found, which is an error
-
-	return value;
 }
