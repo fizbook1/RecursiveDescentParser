@@ -1,2 +1,9 @@
 config dec
 print 1 + 1
+myVar = 4 + 3 * 8
+print myVar
+print myVar * 5
+config hex
+print myVar
+config bin
+print myVar

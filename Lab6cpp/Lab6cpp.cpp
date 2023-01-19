@@ -15,47 +15,16 @@ int main()
     
     std::cout << "Hello World!\n";
 
-    std::vector<std::string> tokenlist;
-
 	token.tokenize();
-	tokenlist = 
 
-	//tokenlist.push_back("myvar");
-	//tokenlist.push_back("=");
-	//tokenlist.push_back("(");
-	//tokenlist.push_back("3");
-	//tokenlist.push_back("+");
-	//tokenlist.push_back("3");
-	//tokenlist.push_back(")");
-	//tokenlist.push_back("/");
-	//tokenlist.push_back("3");
-	//parse.parse(tokenlist);
-	//tokenlist.clear();
+    
 
-	//tokenlist.push_back("print");
-	//tokenlist.push_back("myvar");
-	//parse.parse(tokenlist);
-	//tokenlist.clear();
+    while (!token.reading_complete())
+    {
+        parse.parse(token.get_line());
+    }
 
-	//tokenlist.push_back("myvar2");
-	//tokenlist.push_back("=");
-	//tokenlist.push_back("myvar");
-	//tokenlist.push_back("*");
-	//tokenlist.push_back("myvar");
-	//parse.parse(tokenlist);
-	//tokenlist.clear();
-
-	//tokenlist.push_back("print");
-	//tokenlist.push_back("myvar");
-	//parse.parse(tokenlist);
-	//tokenlist.clear();
-
-	//tokenlist.push_back("print");
-	//tokenlist.push_back("myvar2");
-	//parse.parse(tokenlist);
-	//tokenlist.clear();
-
-
+    bool what = token.reading_complete();
 
 }
 

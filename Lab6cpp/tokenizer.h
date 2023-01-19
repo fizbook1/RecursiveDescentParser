@@ -3,10 +3,13 @@
 #include <vector>
 class tokenizer
 {
+private:
+	int position;
+	std::vector<std::vector<std::string>> lines;
 public:
 	std::string line;
-	std::vector<std::string> tokenize();
+	void tokenize();
 	std::vector<std::string> get_line();
-	std::string get_next_token();
+	bool reading_complete();
 };
 

@@ -4,13 +4,14 @@
 #include <fstream>
 #include <iostream>
 
-std::vector<std::string> tokenizer::tokenize() {
+void tokenizer::tokenize() {
 
-	int position = 0;
+	position = 0;
 	bool done = false;
-	std::vector<std::vector<std::string>> lines;
-	std::vector<std::string> tokens;
+	
 	std::string text;
+
+	lines.push_back(std::vector<std::string>());
 
 	std::ifstream file;
 	file.open("text.c@");
@@ -20,32 +21,46 @@ std::vector<std::string> tokenizer::tokenize() {
 		exit(1);
 	}
 
-	
+	//fix formatting
+
 	while (std::getline(file, text, ' '))
 	{
 		std::istringstream iss(text);
 
-		if (text == "\n")
-		{
-			
-		}
-		if (!text.empty())
-		{
-			tokens.push_back(text);
-		}
-		
+		int newline = text.find("\n");
 
-		++position;
+		if (newline > 0)
+		{
+			std::string before_n_line = text.substr(0, newline);
+			lines[position].push_back(before_n_line);
+
+			++position;
+			lines.push_back(std::vector<std::string>());
+			std::string after_n_line = text.substr(newline + 1, text.length());
+			lines[position].push_back(after_n_line);
+		}
+		else if (!text.empty())
+		{
+			lines[position].push_back(text);
+		}
+
 	}
-	return tokens;
+	position = -1;
 }
 std::vector<std::string> tokenizer::get_line()
 {
 	//return  tokens;
+	position++;
+	return lines[position];
 }
 
-std::string tokenizer::get_next_token()
+bool tokenizer::reading_complete()
 {
-	return "hi";
+	if (position == lines.size() - 1)
+	{
+		return true;
+	}
+
+	return false;
 }
 

@@ -73,25 +73,25 @@ int parser::parse_config()
 			{
 				consume("dec");
 				config_mode = 0;
-				std::cout << "Configuration mode set to decimal.";
+				std::cout << "Configuration mode set to decimal.\n";
 				return 0;
 			}
 			else if (next_token == "hex")
 			{
 				consume("hex");
 				config_mode = 1;
-				std::cout << "Configuration mode set to hexadecimal.";
+				std::cout << "Configuration mode set to hexadecimal.\n";
 				return 1;
 			}
 			else if (next_token == "bin")
 			{
 				consume("bin");
 				config_mode = 2;
-				std::cout << "Configuration mode set to binary.";
+				std::cout << "Configuration mode set to binary.\n";
 				return 2;
 			}
 			else
-				std::cout << "ERROR: No suitable configuration mode entered.";
+				std::cout << "ERROR: No suitable configuration mode entered. \n";
 			throw std::invalid_argument("No suitable configuration mode entered.");
 		}
 		else
