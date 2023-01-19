@@ -43,14 +43,16 @@ void parser::consume(const std::string& token) {
 	++position;
 }
 
-bool parser::is_integer(std::string check)
+bool parser::is_integer(const std::string check)
 {
 	return (std::regex_match(check, std::regex("-?[0-9][0-9]*")));
+	//integer is allowed to start on - but doesn't have to. has to contain a number in its first spot (after eventual -). additional numbers are allowed but not required.
 }
 
-bool parser::is_variable(std::string check)
+bool parser::is_variable(const std::string check)
 {
 	return (std::regex_match(check, std::regex("[A-z][A-z0-9]*")));
+	//variable must start with a letter, but following characters may be letters or numbers if any at all.
 }
 
 int parser::parse_statement()
@@ -127,7 +129,7 @@ int parser::parse_assign()
 
 	if (is_variable(next_token) && next_token != "print" && next_token != "config")
 	{
-		assign_target = next_token;
+		std::string assign_target = next_token;
 
 		consume(next_token);
 			
@@ -158,8 +160,8 @@ int parser::parse_assign()
 
 int parser::parse_math()
 {
-	treenode* hell = parse_expression();
-	return hell->eval();
+	treenode* result = parse_expression();
+	return result->eval();
 }
 
 treenode* parser::parse_factor()
@@ -181,7 +183,7 @@ treenode* parser::parse_factor()
 			std::cout << "ERROR: Use of unassigned variable " << next_token << ".\n";
 			return new integer(0);
 		}
-		integer* dummy = new integer(hashmap.at(next_token));
+		integer* dummy = new integer(hashmap.at(next_token)); //no need to mess around with weird stuff for this one when I can just add an integer node to the tree with the value of the variable, hasn't caused any weirdness as far as I could tell
 		return dummy;
 	}
 	else if (next_token == "(")
@@ -201,7 +203,7 @@ treenode* parser::parse_factor()
 			std::cout << "probably an error forgor closing parenthesis";
 		}
 	}
-	else if (next_token == "-")
+	else if (next_token == "-") //unused, is supposed to be negate but not required and would require more regexing. functioning c@ code won't end up here anyway.
 	{
 		consume("-");
 		next_token = peek();
@@ -280,12 +282,7 @@ treenode* parser::parse_term()
 }
 
 
-bool parser::evaluate() 
-{
-	return parse_statement();
-}
-
-void parser::do_print(int number)
+void parser::do_print(const int number) const
 {
 	switch (config_mode)
 	{

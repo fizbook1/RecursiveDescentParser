@@ -81,17 +81,6 @@ negate::negate(treenode* _term)
 }
 
 
-
-int id::eval()
-{
-	return 1;
-}
-
-
-
-
-
-
 int integer::eval()
 {
 	return number;

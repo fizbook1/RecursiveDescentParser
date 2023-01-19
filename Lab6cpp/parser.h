@@ -8,7 +8,7 @@
 
 class parser
 {
-public:
+private:
 	std::vector<std::string> tokens;
 	int position;
 	const std::string ETX = "\u0003";
@@ -19,25 +19,20 @@ public:
 	//0 decimal, 1 hex, 2 binary
 	int config_mode = 0;
 
-	std::unordered_map<std::string, int> hashmap;
-	std::string assign_target;
-
-	void init();
+	std::unordered_map<std::string, int> hashmap; //to save variables
 
 	void consume(const std::string& token);
 
-	bool evaluate();
+	//not entirely sure this follows the grammar precisely but it seems to work with the code
 
 	treenode* parse_expression();
 
 	treenode* parse_term();
-	
+
 	treenode* parse_factor();
 
-	bool is_integer(std::string check);
-	bool is_variable(std::string check);
-
-	void parse(std::vector<std::string> tokenlist);
+	bool is_integer(const std::string check);
+	bool is_variable(const std::string check);
 
 	int parse_statement();
 
@@ -49,11 +44,12 @@ public:
 
 	int parse_math();
 
+	void do_print(const int number) const;
 
-
-
-
-	void do_print(int number);
-
+public:
+	
+	void parse(std::vector<std::string> tokenlist);
+	void init();
+	
 };
 

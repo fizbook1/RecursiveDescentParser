@@ -7,11 +7,10 @@
 void tokenizer::tokenize() {
 
 	position = 0;
-	bool done = false;
 	
 	std::string text;
 
-	lines.push_back(std::vector<std::string>());
+	lines.push_back(std::vector<std::string>()); //push back one vector so we have something to write to
 
 	std::ifstream file;
 	file.open("text.c@");
@@ -27,7 +26,7 @@ void tokenizer::tokenize() {
 	{
 		std::istringstream iss(text);
 
-		int newline = text.find("\n");
+		int newline = text.find("\n"); //if new line found, save location to split later
 
 		if (newline > 0)
 		{
@@ -35,13 +34,13 @@ void tokenizer::tokenize() {
 			lines[position].push_back(before_n_line);
 
 			++position;
-			lines.push_back(std::vector<std::string>());
+			lines.push_back(std::vector<std::string>()); //add a new vector on the vector vector to signify a new line and increment position AFTER the line break
 			std::string after_n_line = text.substr(newline + 1, text.length());
 			lines[position].push_back(after_n_line);
 		}
 		else if (!text.empty())
 		{
-			lines[position].push_back(text);
+			lines[position].push_back(text); //to only push back elements that make sense
 		}
 
 	}
@@ -56,7 +55,7 @@ std::vector<std::string> tokenizer::get_line()
 
 bool tokenizer::reading_complete()
 {
-	if (position == lines.size() - 1)
+	if (position == lines.size() - 1) //dunno why <= and stuff doesn't work, returning bool might be the issue? not sure
 	{
 		return true;
 	}
