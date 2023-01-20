@@ -7,6 +7,7 @@ public:
 	virtual int eval();
 	treenode();
 	
+	virtual ~treenode();
 };
 
 class add : public treenode {
@@ -16,6 +17,8 @@ public:
 	int eval();
 
 	add(treenode* _l, treenode* _r);
+
+	~add();
 };
 
 class subtract : public treenode {
@@ -27,6 +30,8 @@ public:
 	int eval();
 
 	subtract(treenode* _l, treenode* _r);
+
+	~subtract();
 };
 
 class multiply : public treenode {
@@ -36,6 +41,8 @@ public:
 	int eval();
 
 	multiply(treenode* _l, treenode* _r);
+
+	~multiply();
 };
 
 class divide : public  treenode {
@@ -45,6 +52,8 @@ public:
 	int eval();
 
 	divide(treenode* _l, treenode* _r);
+
+	~divide();
 };
 
 class negate : public treenode {
@@ -55,6 +64,8 @@ public:
 	int eval(); //not implemented cause that would require more regexing
 
 	negate(treenode* _term);
+
+	~negate();
 };
 
 
@@ -65,4 +76,6 @@ public:
 	int eval();
 
 	integer(int _value);
+
+	~integer();
 };

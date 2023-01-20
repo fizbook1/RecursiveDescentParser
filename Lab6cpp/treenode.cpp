@@ -13,6 +13,11 @@ treenode::treenode()
 
 }
 
+treenode::~treenode()
+{
+
+}
+
 
 
 
@@ -30,6 +35,11 @@ add::add(treenode* _l, treenode* _r)
 	r = _r;
 }
 
+add::~add()
+{
+	delete l;
+	delete r;
+}
 
 
 int subtract::eval() 
@@ -43,6 +53,11 @@ subtract::subtract(treenode* _l, treenode* _r)
 	r = _r;
 }
 
+subtract::~subtract()
+{
+	delete l;
+	delete r;
+}
 
 
 int multiply::eval()
@@ -54,6 +69,12 @@ multiply::multiply(treenode* _l, treenode* _r)
 {
 	l = _l;
 	r = _r;
+}
+
+multiply::~multiply()
+{
+	delete l;
+	delete r;
 }
 
 
@@ -69,6 +90,11 @@ divide::divide(treenode* _l, treenode* _r)
 	r = _r;
 }
 
+divide::~divide()
+{
+	delete l;
+	delete r;
+}
 
 int negate::eval() 
 {
@@ -80,6 +106,10 @@ negate::negate(treenode* _term)
 	term = _term;
 }
 
+negate::~negate()
+{
+	delete term;
+}
 
 int integer::eval()
 {
@@ -89,4 +119,9 @@ int integer::eval()
 integer::integer(int _value)
 {
 	number = _value;
+}
+
+integer::~integer()
+{
+	
 }
