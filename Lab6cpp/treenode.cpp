@@ -30,6 +30,11 @@ add::add(treenode* _l, treenode* _r)
 	r = _r;
 }
 
+add::~add()
+{
+	delete l;
+	delete r;
+}
 
 
 int subtract::eval() 
@@ -43,6 +48,11 @@ subtract::subtract(treenode* _l, treenode* _r)
 	r = _r;
 }
 
+subtract::~subtract()
+{
+	delete l;
+	delete r;
+}
 
 
 int multiply::eval()
