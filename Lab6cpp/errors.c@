@@ -1,0 +1,30 @@
+config what
+print 1 + * 1
+print 1 + myVar
+myVar = 4 * ( 3 + 8 / 2 
+print myVar
+print myVar * 5
+config hex
+print myVar
+config bin
+print myVar
+myVar = myVar * 4
+myVar2 = myVar * -2
+print myVar
+print myVar2
+config dec
+print myVar
+print myVar2
+myVar3 = 32
+config hex
+print myVar3
+print myVar3 * 2
+print myVar3 / 2
+config dec
+print myVar3
+print myVar3 * 2
+print myVar3 / 2
+config bin
+print myVar3
+print myVar3 * 2
+print myVar3 / 2

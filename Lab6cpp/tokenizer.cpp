@@ -13,7 +13,7 @@ void tokenizer::tokenize() {
 	lines.push_back(std::vector<std::string>()); //push back one vector so we have something to write to
 
 	std::ifstream file;
-	file.open("text.c@");
+	file.open("code.c@");
 
 	if (!file) {
 		std::cerr << "ERROR: File couldn't be opened, likely currently used by another program.";

@@ -97,8 +97,21 @@ int parser::parse_config()
 				return 2;
 			}
 			else
-				std::cout << "ERROR: No suitable configuration mode entered. \n";
-			throw std::invalid_argument("No suitable configuration mode entered.");
+				*output << "ERROR: No suitable configuration mode entered. Configuration mode unchanged. \n";
+			switch (config_mode)
+			{
+			case 0:
+				*output << "Current configuration mode is decimal. \n";
+				break;
+
+			case 1:
+				*output << "Current configuration mode is hexadecimal. \n";
+				break;
+
+			case 2:
+				*output << "Current configuration mode is binary. \n";
+				break;
+				}
 		}
 		else
 			break;
@@ -151,8 +164,7 @@ int parser::parse_assign()
 			next_token = peek(1);
 			if (next_token == "=")
 			{
-				std::cout << "ERROR: Cannot use 'print' or 'config' as variable names. These are reserved as keywords for the language runtime. big fancy words \n";
-				throw std::runtime_error("Cannot use 'print' or 'config' as variable names.");
+				*output << "ERROR: Cannot use 'print' or 'config' as variable names. \n";
 			}
 
 		}
@@ -183,8 +195,10 @@ treenode* parser::parse_factor()
 		consume(next_token);
 		if (hashmap.count(next_token) == 0)
 		{
-			std::cout << "ERROR: Use of unassigned variable " << next_token << ".\n";
-			return new integer(0);
+
+			*output << "ERROR: Use of unassigned variable " << next_token << ". Assigning new variable and returning 1 as its value.\n";
+			hashmap.insert_or_assign(next_token, 1);
+			return new integer(1);
 		}
 		integer* dummy = new integer(hashmap.at(next_token)); //no need to mess around with weird stuff for this one when I can just add an integer node to the tree with the value of the variable, hasn't caused any weirdness as far as I could tell
 		return dummy;
@@ -203,15 +217,13 @@ treenode* parser::parse_factor()
 		}
 		else
 		{
-			std::cout << "probably an error forgor closing parenthesis";
+			*output << "ERROR: No closing parenthesis found.\n";
 		}
 	}
-	else if (next_token == "-") //unused, is supposed to be negate but not required and would require more regexing. functioning c@ code won't end up here anyway.
+	else if (next_token == "-" || next_token == "*" || next_token == "/" || next_token == "+" || next_token == ")")
 	{
-		consume("-");
-		next_token = peek();
-		
-		negate* dummy = new negate(parse_factor());
+		*output << "ERROR: No complete expression found after operator. Returning 0 as value. \n";
+		integer* dummy = new integer(0);
 		return dummy;
 	}
 }

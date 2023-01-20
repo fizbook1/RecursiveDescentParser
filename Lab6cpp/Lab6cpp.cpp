@@ -13,12 +13,8 @@ int main()
 	tokenizer token = tokenizer();
 
     parse.init();
-    
-    std::cout << "Hello World!\n" ;
 
 	token.tokenize();
-
-    
 
     while (!token.reading_complete())
     {
