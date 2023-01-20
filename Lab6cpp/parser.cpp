@@ -4,11 +4,15 @@
 #include <bitset>
 #include <stdexcept>
 
+parser::parser(std::ostream* _output)
+{
+	output = _output;
+	position = 0;
+}
+
 void parser::init()
 {
 	hashmap = std::unordered_map<std::string, int>();
-
-	
 }
 
 void parser::parse(std::vector<std::string> tokenlist)
@@ -75,21 +79,21 @@ int parser::parse_config()
 			{
 				consume("dec");
 				config_mode = 0;
-				std::cout << "Configuration mode set to decimal.\n";
+				* output << "Configuration mode set to decimal.\n";
 				return 0;
 			}
 			else if (next_token == "hex")
 			{
 				consume("hex");
 				config_mode = 1;
-				std::cout << "Configuration mode set to hexadecimal.\n";
+				*output << "Configuration mode set to hexadecimal.\n";
 				return 1;
 			}
 			else if (next_token == "bin")
 			{
 				consume("bin");
 				config_mode = 2;
-				std::cout << "Configuration mode set to binary.\n";
+				*output << "Configuration mode set to binary.\n";
 				return 2;
 			}
 			else
@@ -139,7 +143,6 @@ int parser::parse_assign()
 			consume("=");
 
 			hashmap.insert_or_assign(assign_target, parse_math());
-			int wat = 5;
 		}
 	}
 
@@ -288,19 +291,19 @@ void parser::do_print(const int number) const
 	{
 		case 0:
 			
-			std::cout << std::dec << number << std::endl;
+			*output << std::dec << number << std::endl;
 
 		break;
 
 		case 1:
 
-			std::cout << std::hex << number << std::endl;
+			*output << std::hex << number << std::endl;
 
 		break;
 
 		case 2:
 
-			std::cout << std::bitset<32>(number).to_string() << std::endl;
+			*output << std::bitset<32>(number).to_string() << std::endl;
 
 		break;
 	}

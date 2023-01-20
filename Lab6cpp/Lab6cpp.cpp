@@ -8,7 +8,8 @@
 
 int main()
 {
-    parser parse = parser();
+    std::ostream* output = &std::cout;
+    parser parse = parser(output);
 	tokenizer token = tokenizer();
 
     parse.init();

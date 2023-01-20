@@ -9,6 +9,7 @@
 class parser
 {
 private:
+	std::ostream* output;
 	std::vector<std::string> tokens;
 	int position;
 	const std::string ETX = "\u0003";
@@ -50,6 +51,8 @@ public:
 	
 	void parse(std::vector<std::string> tokenlist);
 	void init();
+	parser(std::ostream* _output);
+	parser();
 	
 };
 

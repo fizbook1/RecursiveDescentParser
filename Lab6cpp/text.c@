@@ -8,7 +8,7 @@ print myVar
 config bin
 print myVar
 myVar = myVar * 4
-myVar2 = myVar * 2
+myVar2 = myVar * -2
 print myVar
 print myVar2
 config dec
