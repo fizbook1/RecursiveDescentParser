@@ -13,7 +13,7 @@ int main()
 
     parse.init();
     
-    std::cout << "Hello World!\n";
+    std::cout << "Hello World!\n" ;
 
 	token.tokenize();
 
@@ -23,8 +23,6 @@ int main()
     {
         parse.parse(token.get_line());
     }
-
-    bool what = token.reading_complete();
 
 }
 
